@@ -8,6 +8,10 @@ import reducers from "./reducers";
 
 const store = createStore(reducers, applyMiddleware(thunk))
 
+store.subscribe(() => {
+    console.log("state updated");
+    console.log(store.getState())
+})
 ReactDOM.render(
     <Provider store={store}>
         <App />

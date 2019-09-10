@@ -1,34 +1,25 @@
 import React from "react";
 import { connect } from "react-redux"
 import { postToDoList} from "../actions"
-import jsonPlaceholder from "../apis/jsonPlaceholder"
-import axios from "axios"
 
 class AddToDo extends React.Component {
     state = {
         userId: null,
-        text: "",
+        title: "",
         completed: false,
         id: 201
     }
- 
     onFormSubmit = (event) => {
         event.preventDefault();
-        postToDoList(this.title, this.completed, this.id)
-        /*todoPronto = {
-            userId: 1,
-            id: null,
-            title: this.state.text,
-            completed: this.state.completed
-        }
-
-        axios.post("https://jsonplaceholder.typicode.com/todos", todoPronto)*/
-        this.setState ({ title: ""})
-        
+        this.props.postToDoList({ 
+            id: this.idmais,
+            title: this.state.title,
+            completed: this.state.completed,
+            userId: 1
+        });
+        this.setState ({ title: ""})   
     }
-
     handleChecked = () => this.setState({completed: !this.state.completed});
-
     render(){
         return(
             <div>
@@ -46,11 +37,11 @@ class AddToDo extends React.Component {
         )
     }
 }
-const mapStateToProps = (state) => {
+const mapPostToProps = (state) => {
     return {todos: state.todos}
 }
 export default connect(
-    mapStateToProps,
+    mapPostToProps,
     { postToDoList }
     )(AddToDo);
 

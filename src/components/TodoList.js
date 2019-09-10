@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux"
-import { fetchToDoList, postToDoList } from "../actions"
+import { fetchToDoList} from "../actions"
 class ToDoList extends React.Component {
     componentDidMount() {
         this.props.fetchToDoList();
@@ -31,5 +31,5 @@ const mapStateToProps = (state) => {
 }
 export default connect(
     mapStateToProps,
-    { fetchToDoList, postToDoList }
+    { fetchToDoList }
     )(ToDoList);

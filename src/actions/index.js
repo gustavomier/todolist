@@ -13,5 +13,5 @@ export const postToDoList = (id, text, completed) => async dispatch => {
         id: id,
         text: text,
         completed: completed
-    } })
+    }  }, console.log())
 }

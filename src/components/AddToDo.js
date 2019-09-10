@@ -1,20 +1,34 @@
 import React from "react";
-import CheckBox from "./Checkbox"
+import { connect } from "react-redux"
+import { postToDoList} from "../actions"
+import jsonPlaceholder from "../apis/jsonPlaceholder"
+import axios from "axios"
 
-export default class AddToDo extends React.Component {
-    state = {term: ""}
-
-    onClickCheckbox = () => {
-        console.log(this.checked)
+class AddToDo extends React.Component {
+    state = {
+        userId: null,
+        text: "",
+        completed: false,
+        id: 201
     }
-
+ 
     onFormSubmit = (event) => {
         event.preventDefault();
+        postToDoList(this.title, this.completed, this.id)
+        /*todoPronto = {
+            userId: 1,
+            id: null,
+            title: this.state.text,
+            completed: this.state.completed
+        }
 
-        console.log(this.state.term)
-
-        this.setState ({ term: ""})
+        axios.post("https://jsonplaceholder.typicode.com/todos", todoPronto)*/
+        this.setState ({ title: ""})
+        
     }
+
+    handleChecked = () => this.setState({completed: !this.state.completed});
+
     render(){
         return(
             <div>
@@ -22,18 +36,24 @@ export default class AddToDo extends React.Component {
                 <input 
                     type="text" 
                     placeholder="Insira o texto"
-                    value={this.state.term} 
-                    onChange={e => this.setState({ term: e.target.value })} />
+                    value={this.state.title} 
+                    onChange={e => this.setState({ title: e.target.value })} />
                 <br />
-                <CheckBox />
+                <label><input type="checkbox" onChange={ this.handleChecked }/> O ToDo {this.state.completed ? 'foi' : 'nao foi'} realizado</label>
             </form>
             <button className="sendtodo" onClick={this.onFormSubmit} >Submeter ToDo</button>
         </div>
         )
     }
-
-
 }
+const mapStateToProps = (state) => {
+    return {todos: state.todos}
+}
+export default connect(
+    mapStateToProps,
+    { postToDoList }
+    )(AddToDo);
+
 
 
 
